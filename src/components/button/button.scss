@@ -1,0 +1,8 @@
+@import "../../styles/StylesIndex.scss";
+
+.slot-button {
+  @include borders();
+  @include buttons();
+  width: 30px;
+  height: 30px;
+}
