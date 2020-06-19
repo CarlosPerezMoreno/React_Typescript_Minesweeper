@@ -9,14 +9,21 @@ import { generateCells } from "./utils/utils";
 import Button from "./components/button/button";
 
 import "./App.scss";
+import { CellValue } from "./types/types";
 
 const App: React.FC = () => {
   const [cells, setCells] = useState(generateCells());
 
   const renderCells = (): React.ReactNode => {
     return cells.map((row, rowIndex) =>
-      row.map((col, colIndex) => (
-        <Button key={`${rowIndex}-${colIndex}`} row={rowIndex} col={colIndex} />
+      row.map((cell, colIndex) => (
+        <Button
+          key={`${rowIndex}-${colIndex}`}
+          state={cell.state}
+          value={cell.value}
+          row={rowIndex}
+          col={colIndex}
+        />
       ))
     );
   };
@@ -26,7 +33,7 @@ const App: React.FC = () => {
       <div className="Header">
         <NumberDisplay value={0} />
         <div className="Face">
-          <span role="img" aria-label="">
+          <span role="img" aria-label="smile">
             😊
           </span>
         </div>

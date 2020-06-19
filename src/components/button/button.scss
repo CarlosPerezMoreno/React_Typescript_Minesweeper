@@ -3,6 +3,45 @@
 .slot-button {
   @include borders();
   @include buttons();
-  width: 30px;
+  align-items: center;
+  display: flex;
+  font-weight: bold;
   height: 30px;
+  justify-content: center;
+  width: 30px;
+
+  &.visible-button {
+    border-color: #7b7b7b;
+    border-width: 1px;
+  }
+
+  span {
+    margin-left: 2px;
+    font-size: 15px;
+  }
+
+  &.valueIs1 {
+    color: blue;
+  }
+  &.valueIs2 {
+    color: red;
+  }
+  &.valueIs3 {
+    color: green;
+  }
+  &.valueIs4 {
+    color: purple;
+  }
+  &.valueIs5 {
+    color: rgb(114, 74, 1);
+  }
+  &.valueIs6 {
+    color: orangered;
+  }
+  &.valueIs7 {
+    color: crimson;
+  }
+  &.valueIs8 {
+    color: teal;
+  }
 }
