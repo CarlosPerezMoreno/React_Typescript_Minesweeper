@@ -2,6 +2,53 @@ import React from "react";
 import { MAX_COLUMNS, MAX_ROWS, NO_OF_BOMBS } from "../constants/constants";
 import { Cell, CellValue, CellState } from "../types/types";
 
+const grabAllAdjacentCells = (
+  cells: Cell[][],
+  rowParam: number,
+  colParam: number
+): {
+  topLeftCell: Cell | null;
+  topCell: Cell | null;
+  topRightCell: Cell | null;
+  leftCell: Cell | null;
+  rightCell: Cell | null;
+  bottomLeftCell: Cell | null;
+  bottomCell: Cell | null;
+  bottomRightCell: Cell | null;
+} => {
+  const topLeftCell =
+    rowParam > 0 && colParam > 0 ? cells[rowParam - 1][colParam - 1] : null;
+  const topCell = rowParam > 0 ? cells[rowParam - 1][colParam] : null;
+  const topRightCell =
+    rowParam > 0 && colParam < MAX_COLS - 1
+      ? cells[rowParam - 1][colParam + 1]
+      : null;
+  const leftCell = colParam > 0 ? cells[rowParam][colParam - 1] : null;
+  const rightCell =
+    colParam < MAX_COLS - 1 ? cells[rowParam][colParam + 1] : null;
+  const bottomLeftCell =
+    rowParam < MAX_ROWS - 1 && colParam > 0
+      ? cells[rowParam + 1][colParam - 1]
+      : null;
+  const bottomCell =
+    rowParam < MAX_ROWS - 1 ? cells[rowParam + 1][colParam] : null;
+  const bottomRightCell =
+    rowParam < MAX_ROWS - 1 && colParam < MAX_COLS - 1
+      ? cells[rowParam + 1][colParam + 1]
+      : null;
+
+  return {
+    topLeftCell,
+    topCell,
+    topRightCell,
+    leftCell,
+    rightCell,
+    bottomLeftCell,
+    bottomCell,
+    bottomRightCell,
+  };
+};
+
 export const generateCells = (): Cell[][] => {
   let cells: Cell[][] = [];
 
@@ -48,26 +95,16 @@ export const generateCells = (): Cell[][] => {
       }
 
       let numberOfBombs = 0;
-      const topLeftBomb =
-        rowIndex > 0 && colIndex > 0 ? cells[rowIndex - 1][colIndex - 1] : null;
-      const topBomb = rowIndex > 0 ? cells[rowIndex - 1][colIndex] : null;
-      const topRightBomb =
-        rowIndex > 0 && colIndex < MAX_COLUMNS - 1
-          ? cells[rowIndex - 1][colIndex + 1]
-          : null;
-      const leftBomb = colIndex > 0 ? cells[rowIndex][colIndex - 1] : null;
-      const rightBomb =
-        colIndex < MAX_COLUMNS - 1 ? cells[rowIndex][colIndex + 1] : null;
-      const bottomLeftBomb =
-        rowIndex < MAX_ROWS - 1 && colIndex > 0
-          ? cells[rowIndex + 1][colIndex - 1]
-          : null;
-      const bottomBomb =
-        rowIndex < MAX_ROWS - 1 ? cells[rowIndex + 1][colIndex] : null;
-      const bottomRightBomb =
-        rowIndex < MAX_ROWS - 1 && colIndex < MAX_COLUMNS - 1
-          ? cells[rowIndex + 1][colIndex + 1]
-          : null;
+      const {
+        topLeftCell,
+        topCell,
+        topRightCell,
+        leftCell,
+        rightCell,
+        bottomLeftCell,
+        bottomCell,
+        bottomRightCell,
+      } = grabAllAdjacentCells(cells, rowIndex, colIndex);
 
       if (topLeftBomb?.value === CellValue.bomb) {
         numberOfBombs++;
@@ -106,4 +143,13 @@ export const generateCells = (): Cell[][] => {
   return cells;
 };
 
-export const handleKeydown = (e: React.MouseEvent) => {};
+export const openMultipleCells = (
+  cells: Cell[][],
+  rowParam: number,
+  colParam: number
+): Cell[][] => {
+  let newCells = cells.slice();
+  const currentCell = cells[rowParam][colParam];
+
+  newCells[rowParam][colParam].state = CellState.open;
+};
