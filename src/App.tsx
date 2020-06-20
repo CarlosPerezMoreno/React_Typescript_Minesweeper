@@ -64,6 +64,7 @@ const App: React.FC = () => {
     if (currentCell.value === CellValue.bomb) {
     } else if (currentCell.value === CellValue.empty) {
       newCells = openMultipleCells(newCells, rowParam, colParam);
+      setCells(newCells);
     } else {
       newCells[rowParam][colParam].state = CellState.visible;
       setCells(newCells);
