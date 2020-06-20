@@ -1,4 +1,4 @@
-# Minesweeper
+# Minesweeper 💣 
 
 _Clasic windows minesweeper App_
 
